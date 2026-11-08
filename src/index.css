@@ -1,0 +1,112 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  /* VolunTerrier palette — four brand colors plus tints/shades mixed only from them */
+  --color-light: #EFF1ED;   /* backgrounds, primary surfaces */
+  --color-dark: #373D20;    /* dark backgrounds, important text, navigation */
+  --color-moss: #717744;    /* buttons, active states, key interactive elements */
+  --color-sage: #BCBD8B;    /* secondary elements, progress, cards, accents */
+
+  --color-brand-50: #EFF1ED;
+  --color-brand-100: #E4E7DB;
+  --color-brand-200: #D5D7BC;
+  --color-brand-300: #BCBD8B;
+  --color-brand-400: #979A66;
+  --color-brand-500: #717744;
+  --color-brand-600: #5C6136;
+  --color-brand-700: #4A4F2B;
+  --color-brand-800: #373D20;
+  --color-brand-900: #2B3019;
+  --color-sun-400: #BCBD8B;
+  --color-sun-500: #979A66;
+  --color-ink-50: #EFF1ED;
+  --color-ink-100: #E4E7DB;
+  --color-ink-200: #D3D6C4;
+  --color-ink-300: #BCBD8B;
+  --color-ink-400: #6A6E45;
+  --color-ink-500: #5C6136;
+  --color-ink-600: #4A4F2B;
+  --color-ink-700: #40452A;
+  --color-ink-800: #373D20;
+  --color-ink-900: #373D20;
+  --color-surface: #E5E8DC;  /* card surface: light + 15% sage */
+  --color-surface-hover: #DADDC9;
+  --color-line: #D3D6C4;     /* hairline dividers */
+  /* flat by default: only dialogs/popovers get elevation */
+  --shadow-card: none;
+  --shadow-glow: none;
+  --shadow-lift: 0 1px 2px rgb(55 61 32 / 0.08), 0 16px 40px -12px rgb(55 61 32 / 0.30);
+}
+
+/* text-size setting scales every rem-based utility */
+html { font-size: 100%; -webkit-tap-highlight-color: transparent; }
+html[data-text="0"] { font-size: 93.75%; }
+html[data-text="2"] { font-size: 112.5%; }
+html[data-text="3"] { font-size: 125%; }
+
+body {
+  @apply bg-brand-50 text-brand-800 antialiased;
+  font-size: 0.9375rem;
+  font-family: var(--font-sans);
+}
+
+html[data-font="hyper"] body, html[data-font="hyper"] button, html[data-font="hyper"] input, html[data-font="hyper"] textarea, html[data-font="hyper"] select {
+  font-family: "Atkinson Hyperlegible", ui-sans-serif, system-ui, sans-serif;
+  letter-spacing: 0.01em;
+}
+
+/* visible focus for keyboard users */
+:focus-visible {
+  outline: 3px solid var(--color-brand-500);
+  outline-offset: 3px;
+  border-radius: 12px;
+}
+html[data-contrast="high"] :focus-visible { outline-color: #373D20; outline-width: 4px; }
+
+/* high contrast mode */
+html[data-contrast="high"] {
+  --color-ink-300: #4A4F2B;
+  --color-ink-400: #373D20;
+  --color-ink-500: #373D20;
+  --color-ink-600: #2B3019;
+  --color-brand-500: #4A4F2B;
+  --color-brand-600: #373D20;
+  --color-moss: #4A4F2B;
+  --color-surface: #EFF1ED;
+}
+html[data-contrast="high"] .hc-border { border-width: 2px; border-color: #373D20 !important; }
+
+/* reduced motion: setting or OS */
+html[data-motion="reduce"] *, html[data-motion="reduce"] *::before, html[data-motion="reduce"] *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+  scroll-behavior: auto !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+}
+
+.text-gradient { color: var(--color-moss); }
+.bg-brand-gradient { background-color: var(--color-moss); }
+.bg-hero { background-color: var(--color-dark); }
+
+.sr-only-focusable:not(:focus) {
+  position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
+}
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { scrollbar-width: none; }
+
+
+@keyframes shimmer { from { background-position: -400px 0 } to { background-position: 400px 0 } }
+.skeleton { background: linear-gradient(90deg, #E4E7DB 0, #EFF1ED 50%, #E4E7DB 100%); background-size: 800px 100%; animation: shimmer 1.2s linear infinite; }
+
+.pb-safe { padding-bottom: max(env(safe-area-inset-bottom), 0px); }
+
+/* Leaflet map tweaks */
+.leaflet-container { font-family: var(--font-sans); background: var(--color-brand-100); }
+.vt-pin { background: var(--color-moss); color: #fff; border: 2px solid var(--color-light); border-radius: 999px; font-weight: 800; font-size: 11px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgb(55 61 32 / .35); }
+.vt-pin.active { background: var(--color-dark); transform: scale(1.15); }
+.vt-origin { background: var(--color-dark); border: 3px solid var(--color-sage); border-radius: 999px; box-shadow: 0 0 0 6px rgb(188 189 139 / .45); }

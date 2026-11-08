@@ -1,0 +1,28 @@
+# Render Blueprint (optional). You can also create the service by hand — see README "Deploy on Render".
+# One web service serves both the API and the built React app (same origin => no CORS, first-party cookies).
+# The database is created separately in the Render dashboard; paste its Internal Database URL as DATABASE_URL.
+services:
+  - type: web
+    name: volunterrier
+    runtime: node
+    plan: free
+    buildCommand: npm ci --include=dev && npm run build
+    startCommand: npm start
+    healthCheckPath: /healthz
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NODE_VERSION
+        value: "22"
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: DATABASE_URL
+        sync: false
+      - key: APP_URL
+        sync: false
+      - key: TRUST_PROXY
+        value: "1"
+      - key: SEED_SAMPLE_DATA
+        value: "false"
+      - key: GEOCODER
+        value: nominatim
